@@ -8,15 +8,7 @@
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
     <body style="background-color: #f9f9f9;">
-        <div class="ui menu">
-            <a class="item">Home</a>
-            <a class="item">Contact</a>
-            <div class="right menu">
-                <a class="item">Sign In</a>
-                <a class="item">Sign Up</a>
-            </div>
-        </div>
-
+        <x-guest-nav />
         <section id="main">
             <div class="ui grid middle aligned" >
                 <!-- Left Column: Welcome Message -->
@@ -43,12 +35,11 @@
             </div>
         </sectoin>
 
-
-
-        <div class="ui inverted vertical footer segment ">
-            <div class="ui container">
-                <div> Copyright 2014-2025 AdminLTE. All rights reserved. Privacy Policy Terms & Conditions Privacy Policy </div>
-            </div>
+        <div class="ui inverted vertical footer segment center aligned">
+            <p>Copyright © 2014–2025 AdminLTE. All rights reserved.</p>
+            <a href="#" class="inverted link">Terms & Conditions</a> |
+            <a href="#" class="inverted link">Privacy Policy</a>
+        </div>
         </div>
 
         <script type="module">

@@ -8,21 +8,24 @@
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
     <body style="background-color: #f9f9f9;">
+        <x-guest-nav page="login"/>
+
        <div class="ui middle aligned center aligned grid" style="height: 100vh;">
             <div class="column" style="max-width: 400px;">
                 <h2 class="ui header"> Admin LTE </h2>
-                <form class="ui large form">
+                <form method="POST" class="ui large form" action="{{ route('login') }}">
+                    @csrf
                     <div class="ui stacked segment">
                         <div class="field">
                             <div class="ui left icon input">
                                 <i class="envelope icon"></i>
-                                <input type="email" name="email" placeholder="Email">
+                                <input id="email" type="email" name="email" placeholder="Email" required autofocus autocomplete="username">
                             </div>
                         </div>
                         <div class="field">
                             <div class="ui left icon input">
                                 <i class="lock icon"></i>
-                                <input type="password" name="password" placeholder="Password">
+                                <input id="password" type="password" name="password" placeholder="Password"  required autocomplete="current-password">
                             </div>
                         </div>
                         <div class="field">
@@ -34,6 +37,7 @@
                         <button class="ui fluid primary button">Sign In</button>
                     </div>
                 </form>
+
                 <div class="ui horizontal divider">OR</div>
                 <div class="ui left floated">
                     <a href="#">Register a new membership</a><br>
