@@ -12,7 +12,7 @@
 
        <div class="ui middle aligned center aligned grid" style="height: 100vh;">
             <div class="column" style="max-width: 400px;">
-                <h2 class="ui header"> Admin LTE </h2>
+                <h2 class="ui header"> Vista G </h2>
                 <form method="POST" class="ui large form" action="{{ route('login') }}">
                     @csrf
                     <div class="ui stacked segment">
