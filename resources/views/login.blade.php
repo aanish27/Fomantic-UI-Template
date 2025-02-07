@@ -35,13 +35,6 @@
                     </div>
                 </form>
                 <div class="ui horizontal divider">OR</div>
-                <button class="ui fluid facebook button">
-                    <i class="facebook icon"></i> Sign in using Facebook
-                </button>
-                <br>
-                <button class="ui fluid google plus button">
-                    <i class="google plus icon"></i> Sign in using Google+
-                </button>
                 <div class="ui left floated">
                     <a href="#">Register a new membership</a><br>
                     <a href="#">I forgot my password</a>
