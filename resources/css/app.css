@@ -1,3 +1,13 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import 'fomantic-ui/dist/semantic.min.css';
+
+
+.ui.footer {
+    /* Increased specificity for SO snippet priority */
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+}
+
+#main{
+    padding-top: 5%;
+}
