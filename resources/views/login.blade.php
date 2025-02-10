@@ -17,6 +17,7 @@
                 <form method="POST" class="ui large form" action="{{ route('login') }}">
                     @csrf
                     <div class="ui stacked segment">
+                        <div class="ui error message"></div>
                         <div class="field">
                             <div class="ui left icon input">
                                 <i class="envelope icon"></i>
@@ -37,7 +38,6 @@
                         </div>
                     </div>
                     <button class="ui fluid primary button">Sign In</button>
-                    <div class="ui error message"></div>
                 </form>
 
                 <div class="ui horizontal divider">OR</div>
