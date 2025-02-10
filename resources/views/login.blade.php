@@ -73,13 +73,10 @@
 
             @if ($errors->any())
                 @foreach ($errors->all() as $error)
-                    $.toast({
-                        class: 'error',
-                        message: "{{ $error }}"
-                    });
+                    $('.ui.form').form('add errors', '{{ $error }}' ,)
                 @endforeach
             @endif
-            
+
         });
         </script>
     </body>
