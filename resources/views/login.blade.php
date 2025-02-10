@@ -6,6 +6,7 @@
         <title>Login</title>
 
         @vite(['resources/css/app.css', 'resources/js/app.js'])
+        <script defer src="https://cdn.jsdelivr.net/npm/fomantic-ui@2.9.3/dist/semantic.min.js"></script>
     </head>
     <body style="background-color: #f9f9f9;">
         <x-guest-nav page="login"/>
@@ -19,13 +20,13 @@
                         <div class="field">
                             <div class="ui left icon input">
                                 <i class="envelope icon"></i>
-                                <input id="email" type="email" name="email" placeholder="Email" required autofocus autocomplete="username">
+                                <input id="email" type="email" name="email" placeholder="Email" autofocus autocomplete="username">
                             </div>
                         </div>
                         <div class="field">
                             <div class="ui left icon input">
                                 <i class="lock icon"></i>
-                                <input id="password" type="password" name="password" placeholder="Password"  required autocomplete="current-password">
+                                <input id="password" type="password" name="password" placeholder="Password"  autocomplete="current-password">
                             </div>
                         </div>
                         <div class="field">
@@ -34,8 +35,9 @@
                                 <label>Remember Me</label>
                             </div>
                         </div>
-                        <button class="ui fluid primary button">Sign In</button>
                     </div>
+                    <button class="ui fluid primary button">Sign In</button>
+                    <div class="ui error message"></div>
                 </form>
 
                 <div class="ui horizontal divider">OR</div>
@@ -44,6 +46,41 @@
                     <a href="#">I forgot my password</a>
                 </div>
             </div>
+
         </div>
+        <script type="module">
+            $(function () {
+                $('.ui.form').form({
+                    fields: {
+                        email: {
+                            rules: [
+                                {
+                                    type   : 'empty',
+                                    prompt : 'Please enter your email'
+                                }
+                            ]
+                        },
+                        password: {
+                            rules: [
+                                {
+                                    type   : 'empty',
+                                    prompt : 'Please Enter the password'
+                                }
+                            ]
+                        },
+                    }
+                });
+
+            @if ($errors->any())
+                @foreach ($errors->all() as $error)
+                    $.toast({
+                        class: 'error',
+                        message: "{{ $error }}"
+                    });
+                @endforeach
+            @endif
+            
+        });
+        </script>
     </body>
 </html>
