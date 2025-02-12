@@ -13,6 +13,7 @@
         "vite": "^6.0.11"
     },
     "dependencies": {
+        "datatables.net-se": "^2.2.2",
         "fomantic-ui": "^2.9.3",
         "jquery": "^3.7.1"
     }

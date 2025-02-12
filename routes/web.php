@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\File;
@@ -32,5 +33,9 @@ Route::get('/images/{filename}', function ($filename) {
     return Response::make($file, 200)->header("Content-Type", $type);
 });
 
+Route::middleware(['auth'])->group(function () {
+    Route::get('employee/draw', [EmployeeController::class, 'draw'])->name('employee.draw');
+    Route::resource('employees', EmployeeController::class);
+});
 
 require __DIR__.'/auth.php';

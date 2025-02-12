@@ -19,7 +19,7 @@
             <a class="item">
                 <img class="ui centered mini circular image" src="{{ url('images/profile.jpg') }}">
             </a>
-            <a class="item"> <i class="user icon"></i> User </a>
+            <a href="{{ route('employees.index') }}" class="item"> <i class="user icon"></i> Employees </a>
             <a class="item"> <i class="book icon"></i> Books </a>
             <a class="item"> <i class="globe icon"></i> Explore </a>
             <a class="item"> <i class="bookmark icon"></i> Bookmark </a>
@@ -36,7 +36,7 @@
 
                 <img class="ui  mini circular image" src="{{ url('images/profile.jpg') }}">
             </a>
-            <a class="item"> <i class="user icon"></i> User </a>
+            <a href="{{ route('employees.index') }}" class="item"> <i class="user icon"></i> Employees </a>
             <a class="item"> <i class="book icon"></i> Books </a>
             <a class="item"> <i class="globe icon"></i> Explore </a>
             <a class="item"> <i class="bookmark icon"></i> Bookmark </a>
