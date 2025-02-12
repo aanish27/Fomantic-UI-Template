@@ -1,5 +1,5 @@
 @import 'fomantic-ui/dist/semantic.min.css';
-
+@import 'datatables.net-se/css/dataTables.semanticui.min.css';
 
 .ui.footer {
     /* Increased specificity for SO snippet priority */
@@ -8,10 +8,10 @@
     width: 100%;
 }
 
-#main{
-    padding-top: 5%;
-}
-
-.sidebar.visible+.pusher {
+/* #main{
     width: calc(100% - 84px);
-}
+} */
+
+
+
+

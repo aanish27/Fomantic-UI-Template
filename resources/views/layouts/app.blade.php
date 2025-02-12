@@ -12,12 +12,29 @@
     </head>
     <body>
         {{-- sidebar --}}
-        <div class="ui left demo vertical inverted labeled icon  sidebar menu ">
+        <div id="icon_sidebar" class="ui left demo vertical inverted labeled icon  sidebar menu">
             <a class="item">
                 <img class="ui centered mini circular image" src="{{ url('images/logo.png') }}">
             </a>
             <a class="item">
                 <img class="ui centered mini circular image" src="{{ url('images/profile.jpg') }}">
+            </a>
+            <a class="item"> <i class="user icon"></i> User </a>
+            <a class="item"> <i class="book icon"></i> Books </a>
+            <a class="item"> <i class="globe icon"></i> Explore </a>
+            <a class="item"> <i class="bookmark icon"></i> Bookmark </a>
+        </div>
+
+        <div id="long_sidebar" class="ui sidebar inverted vertical menu">
+            <a class="item">
+                <div class="ui two column grid">
+                    <div class="left floated  column">Auth::user</div>
+                    <div class="right floated column " ><img class="ui mini circular image" src="{{ url('images/logo.png') }}"></div>
+                </div>
+            </a>
+            <a class="item">
+
+                <img class="ui  mini circular image" src="{{ url('images/profile.jpg') }}">
             </a>
             <a class="item"> <i class="user icon"></i> User </a>
             <a class="item"> <i class="book icon"></i> Books </a>
@@ -51,15 +68,67 @@
 
     <script type="module">
         $(function () {
+
             $('#btn_sidebar').on('click', function () {
-                $('.ui.labeled.icon.sidebar').sidebar('toggle');
+                if($('#icon_sidebar').length > 0){
+                    showLongSidebar()
+                }else{
+                    showIconSidebar()
+                }
             });
 
-            $('.ui.labeled.icon.sidebar').sidebar({
-                context: $('body'),
-                dimPage: false,
-                closable: false
-            }).sidebar('attach events', '.sidebar-toggle').sidebar('show')
+            // toggleDarkMode()
+            function toggleDarkMode () {
+                // add fomantic's inverted class to all ui elements
+                $('body').find('.ui').addClass('inverted');
+                // add custom inverted class to body
+                $('body').addClass('inverted');
+
+                // simple toggle icon change
+                $("#darkmode > i").removeClass('moon');
+                $("#darkmode > i").addClass('sun');
+
+                return;
+            }
+
+            let longSidebar = null;
+            let iconSidebar = null;
+
+            function showLongSidebar() {
+                iconSidebar = $('#icon_sidebar');
+                iconSidebar.remove();
+
+                $('body').append(longSidebar)
+                $('#long_sidebar').removeClass('visible');
+                $('.ui.sidebar').sidebar({
+                    context: $('body'),
+                    dimPage: false,
+                    closable: false
+                }).sidebar('attach events', '.sidebar-toggle').sidebar('show')
+
+                setTimeout(() => {
+                    $(".sidebar.visible + .pusher").css("width", "calc(100% - 260px)");
+                }, 10);
+            }
+
+            function showIconSidebar() {
+                longSidebar = $('#long_sidebar');
+                longSidebar.remove();
+
+                $('body').append(iconSidebar)
+
+                $('#icon_sidebar').removeClass('visible');
+                $('.ui.labeled.icon.sidebar').sidebar({
+                    context: $('body'),
+                    dimPage: false,
+                    closable: false
+                }).sidebar('attach events', '.sidebar-toggle').sidebar('show')
+
+                setTimeout(() => {
+                    $(".sidebar.visible + .pusher").css("width", "calc(100% - 84px)");
+                }, 10);
+            }
+            showIconSidebar()
         });
     </script>
     </body>
