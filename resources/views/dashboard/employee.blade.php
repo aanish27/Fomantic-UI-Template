@@ -2,7 +2,8 @@
     <table id="myTable" class="ui very compact striped table" width="100%"></table>
 
     <script type="module">
-        let table = $('#myTable').DataTable({
+        $(document).ready(function () {
+            let table = $('#myTable').DataTable({
             scrollCollapse: true,
             scrollX: true,
             scrollY: 690,
@@ -66,5 +67,12 @@
                 },
             ],
         });
+
+        $('#myTable').on('draw.dt', function () {
+            if (localStorage.getItem('theme') == 'dark') {
+                $('.ui.unstackable.pagination.menu').addClass('inverted');
+            }
+        });
+    });
     </script>
 </x-app-layout>

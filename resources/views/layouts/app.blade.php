@@ -74,6 +74,12 @@
                 }else{
                     showIconSidebar()
                 }
+
+                setTimeout(() => {
+                    if (localStorage.getItem('theme') == 'dark') {
+                        $('.ui.unstackable.pagination.menu').addClass('inverted');
+                    }
+                }, 1000);
             });
 
             setThemeOnLoad()
@@ -152,7 +158,7 @@
                     context: $('body'),
                     dimPage: false,
                     closable: false
-                }).sidebar('attach events', '.sidebar-toggle').sidebar('show')
+                }).sidebar('show')
 
                 setTimeout(() => {
                     $(".sidebar.visible + .pusher").css("width", "calc(100% - 260px)");
@@ -170,7 +176,7 @@
                     context: $('body'),
                     dimPage: false,
                     closable: false
-                }).sidebar('attach events', '.sidebar-toggle').sidebar('show')
+                }).sidebar('show')
 
                 setTimeout(() => {
                     $(".sidebar.visible + .pusher").css("width", "calc(100% - 100px)");
