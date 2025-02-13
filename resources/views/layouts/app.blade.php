@@ -173,7 +173,7 @@
                 }).sidebar('attach events', '.sidebar-toggle').sidebar('show')
 
                 setTimeout(() => {
-                    $(".sidebar.visible + .pusher").css("width", "calc(100% - 84px)");
+                    $(".sidebar.visible + .pusher").css("width", "calc(100% - 100px)");
                 }, 10);
             }
             showIconSidebar()
