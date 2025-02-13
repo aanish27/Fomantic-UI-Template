@@ -12,7 +12,7 @@
     </head>
     <body>
         {{-- sidebar --}}
-        <div id="icon_sidebar" class="ui left demo vertical inverted labeled icon  sidebar menu">
+        <div id="icon_sidebar" class="ui left demo vertical  labeled icon  sidebar menu">
             <a class="item">
                 <img class="ui centered mini circular image" src="{{ url('images/logo.png') }}">
             </a>
@@ -25,7 +25,7 @@
             <a class="item"> <i class="bookmark icon"></i> Bookmark </a>
         </div>
 
-        <div id="long_sidebar" class="ui sidebar inverted vertical menu">
+        <div id="long_sidebar" class="ui sidebar  vertical menu">
             <a class="item">
                 <div class="ui two column grid">
                     <div class="left floated  column">Auth::user</div>
@@ -33,7 +33,6 @@
                 </div>
             </a>
             <a class="item">
-
                 <img class="ui  mini circular image" src="{{ url('images/profile.jpg') }}">
             </a>
             <a href="{{ route('employees.index') }}" class="item"> <i class="user icon"></i> Employees </a>
@@ -44,11 +43,12 @@
 
         <div class="pusher">
             {{-- nav --}}
-            <div class="ui secondary menu" style="background-color: whitesmoke; margin-bottom: 0;">
+            <div class="ui  menu" style="margin-bottom: 0; border-radius:0 ;">
                 <a class="item" id="btn_sidebar"> <i class="hamburger icon"></i> </a>
                 <a class="item"> Home </a>
                 <a class="item"> Contact </a>
                 <div class="right menu">
+                    <a class="item ui icon basic" id="darkmode"> <i class="moon icon"></i></i> </a>
                     <a class="item"> <i class="search icon"></i> </a>
                     <a class="item" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();"> <i class="sign out alternate icon"></i></i></a>
                     <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
@@ -61,13 +61,14 @@
                 {{ $slot }}
             </main>
 
-            <div class="ui inverted vertical footer segment center aligned">
+            <div class="ui vertical footer segment center aligned">
                 <p>Copyright © 2019 - 2025 VistaG. All rights reserved.</p>
             </div>
         </div>
 
     <script type="module">
         $(function () {
+            localStorage.setItem('theme', 'light')
 
             $('#btn_sidebar').on('click', function () {
                 if($('#icon_sidebar').length > 0){
@@ -77,23 +78,59 @@
                 }
             });
 
-            // toggleDarkMode()
+             $('#darkmode').click(function () {
+                if (localStorage.getItem('theme') == 'light') {
+                    toggleDarkMode();
+                    localStorage.setItem('theme', 'dark')
+                } else {
+                    toggleLightMode();
+                    localStorage.setItem('theme', 'light');
+                }
+            });
+
             function toggleDarkMode () {
-                // add fomantic's inverted class to all ui elements
+
                 $('body').find('.ui').addClass('inverted');
-                // add custom inverted class to body
-                $('body').addClass('inverted');
+                $('.pusher').css('background-color' , 'rgba(0, 0, 0, 0.508)')
+
+                setTimeout(() => {
+                    $('.dt-input.selection.ui.dropdown').addClass('inverted');
+                    $('.ui.unstackable.pagination.menu').addClass('inverted');
+                    $(".dt-search").children('span').addClass('inverted transparent icon').css('border' , 'solid 1px white').css('border-radius' , '5px').css('padding', '5px')
+                    $('#long_sidebar').addClass('inverted');
+                }, 1000);
 
                 // simple toggle icon change
                 $("#darkmode > i").removeClass('moon');
                 $("#darkmode > i").addClass('sun');
+                $(".dt-length").children('label').css('color', 'white')
+                $(".dt-search").children('label').css('color', 'white')
 
-                return;
+                // $("#dt-search-0").css('padding-top', '5px').css('padding-bottom', '5px').css('background-color', 'rgb(27 28 29)').css('color', 'white')
+                $('#myTable_info').css('color', 'white')
+            }
+
+            function toggleLightMode () {
+
+                $('body').find('.ui').removeClass('inverted');
+                $('.pusher').css('background-color' , '')
+
+                $('.dt-input.selection.ui.dropdown').removeClass('inverted');
+                $('.ui.unstackable.pagination.menu').removeClass('inverted');
+                $(".dt-search").children('span').removeClass('inverted transparent icon').css('border' , 'solid 1px white').css('border-radius' , '5px').css('padding', '5px')
+
+                // simple toggle icon change
+                $("#darkmode > i").removeClass('sun');
+                $("#darkmode > i").addClass('moon');
+                $(".dt-length").children('label').css('color', 'black')
+                $(".dt-search").children('label').css('color', 'black')
+
+                // $("#dt-search-0").css('padding-top', '5px').css('padding-bottom', '5px').css('background-color', 'rgb(27 28 29)').css('color', 'black')
+                $('#myTable_info').css('color', 'black')
             }
 
             let longSidebar = null;
             let iconSidebar = null;
-
             function showLongSidebar() {
                 iconSidebar = $('#icon_sidebar');
                 iconSidebar.remove();

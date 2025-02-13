@@ -8,9 +8,10 @@
     width: 100%;
 }
 
-/* #main{
-    width: calc(100% - 84px);
-} */
+#myTable_wrapper{
+    margin: 10px;
+}
+
 
 
 

@@ -1,5 +1,5 @@
 <x-app-layout>
-    <table id="myTable" class="ui very compact striped table" ></table>
+    <table id="myTable" class="ui very compact striped table" width="100%"></table>
 
     <script type="module">
         let table = $('#myTable').DataTable({
