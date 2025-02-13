@@ -5,7 +5,7 @@
         let table = $('#myTable').DataTable({
             scrollCollapse: true,
             scrollX: true,
-            scrollY: 720,
+            scrollY: 690,
             serverSide: true,
             processing: true,
             ajax: {

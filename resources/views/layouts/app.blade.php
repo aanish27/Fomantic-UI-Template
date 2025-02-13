@@ -126,10 +126,10 @@
                 setTimeout(() => {
                     $('.dt-input.selection.ui.dropdown').removeClass('inverted');
                     $('.ui.unstackable.pagination.menu').removeClass('inverted');
+                    $(".dt-search").children('span').addClass('inverted transparent icon').css('border' , 'solid 1px black').css('border-radius' , '5px').css('padding', '5px')
                     $('#long_sidebar').removeClass('inverted');
                 }, 1000);
 
-                $(".dt-search").children('span').removeClass('inverted').css('border' , 'solid 1px black').css('border-radius' , '5px').css('padding', '5px')
                 // simple toggle icon change
                 $("#darkmode > i").removeClass('sun');
                 $("#darkmode > i").addClass('moon');
