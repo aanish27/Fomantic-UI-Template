@@ -68,8 +68,6 @@
 
     <script type="module">
         $(function () {
-            localStorage.setItem('theme', 'light')
-
             $('#btn_sidebar').on('click', function () {
                 if($('#icon_sidebar').length > 0){
                     showLongSidebar()
@@ -78,8 +76,18 @@
                 }
             });
 
-             $('#darkmode').click(function () {
-                if (localStorage.getItem('theme') == 'light') {
+            setThemeOnLoad()
+            function setThemeOnLoad(){
+                if (localStorage.getItem('theme') == 'light' || localStorage.getItem('theme') == null ) {
+                    toggleLightMode();
+                } else {
+                    toggleDarkMode();
+                }
+
+            }
+
+            $('#darkmode').click(function () {
+                if (localStorage.getItem('theme') == 'light' || localStorage.getItem('theme') == undefined ) {
                     toggleDarkMode();
                     localStorage.setItem('theme', 'dark')
                 } else {
@@ -115,10 +123,13 @@
                 $('body').find('.ui').removeClass('inverted');
                 $('.pusher').css('background-color' , '')
 
-                $('.dt-input.selection.ui.dropdown').removeClass('inverted');
-                $('.ui.unstackable.pagination.menu').removeClass('inverted');
-                $(".dt-search").children('span').removeClass('inverted transparent icon').css('border' , 'solid 1px white').css('border-radius' , '5px').css('padding', '5px')
+                setTimeout(() => {
+                    $('.dt-input.selection.ui.dropdown').removeClass('inverted');
+                    $('.ui.unstackable.pagination.menu').removeClass('inverted');
+                    $('#long_sidebar').removeClass('inverted');
+                }, 1000);
 
+                $(".dt-search").children('span').removeClass('inverted').css('border' , 'solid 1px black').css('border-radius' , '5px').css('padding', '5px')
                 // simple toggle icon change
                 $("#darkmode > i").removeClass('sun');
                 $("#darkmode > i").addClass('moon');
