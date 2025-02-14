@@ -120,6 +120,7 @@
                 $(".dt-length").children('label').css('color', 'white')
                 $(".dt-search").children('label').css('color', 'white')
 
+                $(".dt-search").children('.dt-search.ui.input').css('color', 'white')
                 // $("#dt-search-0").css('padding-top', '5px').css('padding-bottom', '5px').css('background-color', 'rgb(27 28 29)').css('color', 'white')
                 $('#myTable_info').css('color', 'white')
             }
@@ -142,6 +143,7 @@
                 $(".dt-length").children('label').css('color', 'black')
                 $(".dt-search").children('label').css('color', 'black')
 
+                $(".dt-search").children('.dt-search.ui.input').css('color', 'black')
                 // $("#dt-search-0").css('padding-top', '5px').css('padding-bottom', '5px').css('background-color', 'rgb(27 28 29)').css('color', 'black')
                 $('#myTable_info').css('color', 'black')
             }
