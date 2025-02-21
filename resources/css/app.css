@@ -1,5 +1,9 @@
-@import 'fomantic-ui/dist/semantic.min.css';
-@import 'datatables.net-se/css/dataTables.semanticui.min.css';
+/* @import 'fomantic-ui/dist/semantic.min.css'; */
+/* @import "../assets/fomantic-ui/theme-material/dist/semantic.min.css"; */
+/* @import "../assets/fomantic-ui/amazon/dist/semantic.min.css"; */
+/* @import "../assets/fomantic-ui/dist/semantic.min.css"; */
+
+/* @import 'datatables.net-se/css/dataTables.semanticui.min.css'; */
 
 .ui.footer {
     /* Increased specificity for SO snippet priority */

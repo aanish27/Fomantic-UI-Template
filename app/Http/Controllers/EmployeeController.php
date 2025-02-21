@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Employee;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Response;
+use Illuminate\Validation\ValidationException;
 
 class EmployeeController extends Controller
 {
@@ -64,7 +65,20 @@ class EmployeeController extends Controller
      */
     public function store(Request $request)
     {
-        //
+         try {
+            $employeeValidated = $request->validate([
+                'name' => 'required|max:50|',
+                'position' => 'required|max:50|',
+                'dob' => 'required|date',
+                'email' => 'required|unique:employees|email',
+                'phone' => 'required|max:13',
+                'address' => 'required|max:255',
+            ]);
+            $employee = Employee::create($employeeValidated);
+            return Response::json('New Employee '. $employee->name . ' Added');
+        } catch (ValidationException $e) {
+            return Response::json($e->errors(), 422);
+        }
     }
 
     /**
