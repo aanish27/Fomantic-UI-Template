@@ -1,14 +1,13 @@
 <x-app-layout>
     <table id="myTable" class="ui very compact striped table" width="100%"></table>
 
-    <div class="ui tiny top aligned modal ">
-        <div class="header">Delete Employee Record</div>
-        <div class="content">
-            <p></p>
+    <div class="ui tiny top aligned modal" id="delete_modal">
+        <div id="delete_modal_header" class="header">Delete Employee Record</div>
+        <div id="delete_modal_content" class="content">
         </div>
         <div class="actions">
-            <div class="ui cancel button">Cancel</div>
-            <div class="ui  button">Delete</div>
+            <div class="ui black cancel button">Cancel</div>
+            <div class="ui red button" id="delete_modal_btn">Delete</div>
         </div>
     </div>
 
@@ -68,9 +67,9 @@
     <script type="module">
         $(document).ready(function () {
             $('.tiny.modal') .modal({
-                dimmerSettings: { opacity: 0 },
-                closable: false
-            }
+                    dimmerSettings: { opacity: 0 },
+                    closable: false
+                }
             )
 
             let table = $('#myTable').DataTable({
@@ -98,9 +97,6 @@
                             id: 'btn_add_record',
                             class: 'ui button primary' ,
                         },
-                        action: function (e, dt, node, config, cb) {
-                            // storeEmployee()
-                        }
                     }]
                 }
             },
@@ -241,6 +237,25 @@
             })
             .catch(function (response){
                 displayToast(response , "error")
+            });
+        });
+
+        //DELETE
+        $('#myTable tbody').on('click' , '#btn_delete' ,function (e) {
+            const data = table.row($(this).parents('tr')).data();
+            $('#delete_modal_header').text('Are you sure to delete the Details of ' + data.name )
+            $('#delete_modal_content').text('This action will delete the details of ' + data.name + ' and the bank account details associated with him/her.' )
+            $('#delete_modal_btn').attr('data-id' , data.id)
+            $('#delete_modal').modal('show');
+        });
+
+        //Dlt Modal Btn
+        $('#delete_modal .actions').on('click' , '#delete_modal_btn' , function (e) {
+            axios.delete(`employees/${$(this).attr('data-id')}`)
+            .then(function (response){
+                table.draw(false);
+                displayToast(response , "success")
+                $('#delete_modal').modal('hide');
             });
         });
 

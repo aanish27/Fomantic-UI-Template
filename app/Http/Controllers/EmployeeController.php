@@ -130,6 +130,17 @@ class EmployeeController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        try {
+            $employee = Employee::withTrashed()->find($id);
+            if ($employee->deleted_at) {
+                return Response::json("Employee " . $employee->name . " was Already Deleted");
+            } else {
+                $employee->delete();
+                return Response::json("Employee " . $employee->name . " is Deleted");
+            };
+            return Response::json($msg);
+        } catch(ValidationException $e) {
+            return Response::json($e->errors(), 422);
+        }
     }
 }
