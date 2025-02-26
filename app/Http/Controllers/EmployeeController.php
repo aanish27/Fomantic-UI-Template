@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Employee;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Response;
+use Illuminate\Validation\Rule;
 use Illuminate\Validation\ValidationException;
 
 class EmployeeController extends Controller
@@ -94,7 +95,8 @@ class EmployeeController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $employee = Employee::where('id',$id)->get();
+        return Response::json($employee);
     }
 
     /**
@@ -102,7 +104,25 @@ class EmployeeController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        try {
+            $employeeValidated = $request->validate([
+                'name' => 'required|max:50',
+                'position' => 'required|max:50',
+                'dob' => 'required|date',
+                'email' => [
+                    'required',
+                    'email',
+                    Rule::unique('employees', 'email')->ignore($id),
+                ],
+                'phone' => 'required|max:13',
+                'address' => 'required|max:255',
+            ]);
+
+            Employee::find($id)->update( $employeeValidated);
+            return Response::json('Employee '  . $employeeValidated['name'] . ' Details Updated');
+        } catch (ValidationException $e) {
+            return Response::json($e->errors(), 422);
+        }
     }
 
     /**
