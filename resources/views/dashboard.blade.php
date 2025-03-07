@@ -1,6 +1,6 @@
 <x-app-layout>
 
-<div class="ui padded segment"  style="background-color: rgb(240, 244, 249); height: 91vh; margin-top:0;">
+<div class="ui padded segment"  style=" height: 91vh; margin-top:0;">
     <div class="ui aligned grid">
         <div class="left floated six wide column">
             <h1 class="ui header">First header</h1>
