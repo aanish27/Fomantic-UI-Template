@@ -1,46 +1,58 @@
 <x-app-layout>
     <table id="myTable" class="ui very compact striped table" width="100%"></table>
 
+    <div class="ui tiny top aligned modal" id="delete_modal">
+        <div id="delete_modal_header" class="header">Delete Employee Record</div>
+        <div id="delete_modal_content" class="content">
+        </div>
+        <div class="actions">
+            <div class="ui black cancel button">Cancel</div>
+            <div class="ui red button" id="delete_modal_btn">Delete</div>
+        </div>
+    </div>
+
+
     <div class="ui modal" id="form_modal">
-        <div class="header">ADD NEW EMPLOYEE</div>
+        <div class="header modal_title">ADD NEW EMPLOYEE</div>
         <div class="content">
-            <form class="ui form">
+            <form class="ui form crud_form">
+                @csrf
                 <div class="two fields">
                     <div class="field">
                         <label for="name" >Name</label>
-                        <input type="text" placeholder="Name" name="name">
+                        <input id="name" type="text" placeholder="Name" name="name">
                     </div>
                     <div class="field">
-                        <label for="postion">Postion</label>
-                        <select class="ui search dropdown">
-                            <option value="">Select Country</option>
-                            <option value="">Intern Software Engineer</option>
-                            <option value="">Associate Software Engineer</option>
-                            <option value="">Software Engineer</option>
-                            <option value="">Senior Software Engineer</option>
-                            <option value="">Tech Lead</option>
-                            <option value="">Project Manager</option>
-                            <option value="">QA Engineer</option>
+                        <label for="position">Postion</label>
+                        <select id="position" name="position" class="ui search dropdown">
+                            <option value="">Select Position</option>
+                            <option value="Intern_Software_Engineer">Intern Software Engineer</option>
+                            <option value="Associate_Software_Engineer">Associate Software Engineer</option>
+                            <option value="Software_Engineer">Software Engineer</option>
+                            <option value="Senior_Software_Engineer">Senior Software Engineer</option>
+                            <option value="Tech_Lead">Tech Lead</option>
+                            <option value="Project_Manager">Project Manager</option>
+                            <option value="QA_Engineer">QA Engineer</option>
                         </select>
                     </div>
                 </div>
                 <div class="three fields">
                     <div class="field">
-                        <label for="DOB" >DOB: </label>
-                        <input type="date" placeholder="DOB" name="DOB" class="ui inverted">
+                        <label for="dob" >DOB: </label>
+                        <input id="dob" type="date" placeholder="DOB" name="dob" class="ui inverted">
                     </div>
                     <div class="field ui inverted">
                         <label for="email">Email</label>
-                        <input type="email" placeholder="email" name="email" required>
+                        <input id="email" type="email" placeholder="email" name="email" required>
                     </div>
                     <div class="field">
                         <label for="phone">Phone</label>
-                        <input type="text" placeholder="Phone" name="phone" class="ui inverted">
+                        <input id="phone" type="text" placeholder="Phone" name="phone" class="ui inverted">
                     </div>
                 </div>
                 <div class="field">
                     <label for="address" >Address</label>
-                    <input type="text" placeholder="address" name="address">
+                    <input id="address" type="text" placeholder="address" name="address">
                 </div>
                   <div class="ui primary submit button" style="display: none;">Submit</div>
                   <div class="ui error message"></div>
@@ -52,55 +64,13 @@
         </div>
     </div>
 
-
-{{--
- <form class="form-modal row  p-1  needs-validation"  novalidate>
-                        @csrf
-                        <div class="mb-2 col-3">
-                            <label for="name" class="form-label fw-bold ">Name:</label>
-                            <input type="text" class="form-control py-1 " id="name" name="name" placeholder="Full Name" required>
-                            <div class="invalid-feedback">Please Enter the Name</div>
-                            <div class="valid-feedback">Name Valid</div>
-                        </div>
-                        <div class=" mb-2 col-3">
-                            <label class="form-label fw-bold" for="position">Position:</label>
-                            <input type="text" class=" form-control py-1 " id="position" name="position" placeholder="Position" required>
-                            <div class="invalid-feedback">Please Enter the Position</div>
-                            <div class="valid-feedback">Position Valid</div>
-                        </div>
-                        <div class="mb-2 col-3" >
-                            <label class="form-label fw-bold" for="dob">DOB:</label>
-                            <input type="date" class=" form-control py-1 " id="dob" name="dob" placeholder="DOB" required>
-                            <div class="invalid-feedback">Please Enter the DOB</div>
-                            <div class="valid-feedback">DOB Valid</div>
-                        </div>
-                        <div class=" mb-2 col-3">
-                            <label class="form-label fw-bold" for="email">Email:</label>
-                            <input type="email" class=" form-control py-1 " id="email" name="email" placeholder="Email" required>
-                            <div class="invalid-feedback">Please Enter the Email</div>
-                            <div class="valid-feedback">Email Valid</div>
-                        </div>
-                        <div class=" mb-2 col-3">
-                            <label class="form-label fw-bold" for="phone">Phone:</label>
-                            <input type="phone" class=" form-control py-1 " id="phone" name="phone" placeholder="Phone" required>
-                            <div class="invalid-feedback">Please Enter the Phone Number</div>
-                            <div class="valid-feedback">Phone Number Valid</div>
-                        </div>
-                        <div class="col-9">
-                            <label class="form-label fw-bold" for="address">Address:</label>
-                            <input type="text" class=" form-control py-1 " id="address" name="address" placeholder="Address" required>
-                            <div class="invalid-feedback">Please Enter the Address</div>
-                            <div class="valid-feedback">Address Valid</div>
-                        </div>
-
-
-                        <div class="modal-footer py-0 border-0 ">
-                            <button type="submit" class="btn btn-primary rounded-2 px-3 py-1 m-0 " id="btn-submit"></button>
-                        </div>
-                    </form> --}}
-
     <script type="module">
         $(document).ready(function () {
+            $('.tiny.modal') .modal({
+                    dimmerSettings: { opacity: 0 },
+                    closable: false
+                }
+            )
 
             let table = $('#myTable').DataTable({
             scrollCollapse: true,
@@ -127,9 +97,6 @@
                             id: 'btn_add_record',
                             class: 'ui button primary' ,
                         },
-                        action: function (e, dt, node, config, cb) {
-                            // storeEmployee()
-                        }
                     }]
                 }
             },
@@ -154,11 +121,11 @@
                     data: null ,
                     title: "Actions",
                     render: function (data, type, row) {
-                        return `<button class="ui icon button" style="padding: 0; background:transparent;">
+                        return `<button id="btn_edit" class="ui icon button" style="padding: 0; background:transparent;">
                                     <i class="edit outline small bordered colored icon green"></i>
                                 </button>
 
-                                <button class="ui icon button" style="padding: 0; background:transparent;">
+                                <button id="btn_delete" class="ui icon button" style="padding: 0; background:transparent;">
                                     <i class="trash alternate outline small bordered colored icon red"></i>
                                 </button>
                                 `
@@ -205,9 +172,114 @@
                 $('.ui.unstackable.pagination.menu').addClass('inverted');
             }
         });
-        //  $('#form_modal').modal('show');
+
+        $('#btn_main_submit').on('click', function (e) {
+            e.preventDefault()
+            $('.crud_form').submit()
+        });
+
+        //CREATE
         $('#btn_add_record').on('click', function () {
             $('#form_modal').modal('show');
+            $('.crud_form').attr("id","create_form").trigger("reset");
+            $('.modal_title').text("ADD EMPLOYEE DETAILS");
+            $('#btn_main_submit').text("Submit");
+        });
+
+        $('.ui.modal').on('submit' , '#create_form', function (e){
+            e.preventDefault();
+            let $data = $('#create_form').serialize()
+            axios.post('employees', $data )
+            .then(function (response){
+                displayToast(response , "success")
+                $('#form_modal').modal('hide');
+                $('#create_form').trigger("reset");
+                table.draw(false);
+            })
+            .catch(function (response){
+                displayToast(response , "error")
+            });
+        });
+
+        // UPDATE
+        let id = null
+        $('#myTable tbody').on('click', '#btn_edit', function (e) {
+            $('.modal_title').text("Edit Employee Details");
+            $('#btn_main_submit').text("Update");
+            $('#form_modal').modal('show');
+            $('.crud_form').attr("id","update_form");
+
+            id = table.row( $(this).parents('tr') ).data().id;
+
+            axios.get(`employees/${id}/edit`)
+            .then(function (response){
+                const data = response.data[0];
+                $('#name').val(data.name)
+                $('#position').val(data.position)
+                $('#dob').val(data.dob)
+                $('#email').val(data.email)
+                $('#phone').val(data.phone)
+                $('#address').val(data.address)
+            });
+        });
+
+        $('.ui.modal').on('submit' , '#update_form', function (e){
+            e.preventDefault();
+            let dataSubmit = new FormData(this)
+            dataSubmit.append('_method', 'patch');
+
+            axios.post(`employees/${id}`, dataSubmit )
+            .then(function (response){
+                displayToast(response , "success")
+                $('#form_modal').modal('hide');
+                $('.create_form').trigger("reset");
+                table.draw(false);
+            })
+            .catch(function (response){
+                displayToast(response , "error")
+            });
+        });
+
+        //DELETE
+        $('#myTable tbody').on('click' , '#btn_delete' ,function (e) {
+            const data = table.row($(this).parents('tr')).data();
+            $('#delete_modal_header').text('Are you sure to delete the Details of ' + data.name )
+            $('#delete_modal_content').text('This action will delete the details of ' + data.name + ' and the bank account details associated with him/her.' )
+            $('#delete_modal_btn').attr('data-id' , data.id)
+            $('#delete_modal').modal('show');
+        });
+
+        //Dlt Modal Btn
+        $('#delete_modal .actions').on('click' , '#delete_modal_btn' , function (e) {
+            axios.delete(`employees/${$(this).attr('data-id')}`)
+            .then(function (response){
+                table.draw(false);
+                displayToast(response , "success")
+                $('#delete_modal').modal('hide');
+            });
+        });
+
+        function displayToast(response , type){
+            if (type == "error") {
+                const errors = response.response.data
+                for (const field in errors) {
+                    errors[field].forEach((error) => {
+                        $.toast({
+                            class: 'error',
+                            message: error,
+                        });
+                    });
+                }
+            } else {
+                $.toast({
+                    class: 'success',
+                    message: response.data,
+                });
+            }
+        }
+
+        $('.ui.negative.red.button').on('click', function () {
+            $('.ui.form').form('reset')
         });
 
         $('.ui.form').form({
@@ -266,15 +338,6 @@
                 }
             },
             inline : true,
-        });
-
-        $('#btn_main_submit').on('click', function (e) {
-            e.preventDefault()
-            $('.ui.primary.submit.button').trigger('click');
-        });
-
-        $('.ui.negative.red.button').on('click', function () {
-            $('.ui.form').form('reset')
         });
     });
     </script>

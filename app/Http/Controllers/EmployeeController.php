@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Employee;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Response;
+use Illuminate\Validation\Rule;
+use Illuminate\Validation\ValidationException;
 
 class EmployeeController extends Controller
 {
@@ -64,7 +66,20 @@ class EmployeeController extends Controller
      */
     public function store(Request $request)
     {
-        //
+         try {
+            $employeeValidated = $request->validate([
+                'name' => 'required|max:50|',
+                'position' => 'required|max:50|',
+                'dob' => 'required|date',
+                'email' => 'required|unique:employees|email',
+                'phone' => 'required|max:13',
+                'address' => 'required|max:255',
+            ]);
+            $employee = Employee::create($employeeValidated);
+            return Response::json('New Employee '. $employee->name . ' Added');
+        } catch (ValidationException $e) {
+            return Response::json($e->errors(), 422);
+        }
     }
 
     /**
@@ -80,7 +95,8 @@ class EmployeeController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $employee = Employee::where('id',$id)->get();
+        return Response::json($employee);
     }
 
     /**
@@ -88,7 +104,25 @@ class EmployeeController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        try {
+            $employeeValidated = $request->validate([
+                'name' => 'required|max:50',
+                'position' => 'required|max:50',
+                'dob' => 'required|date',
+                'email' => [
+                    'required',
+                    'email',
+                    Rule::unique('employees', 'email')->ignore($id),
+                ],
+                'phone' => 'required|max:13',
+                'address' => 'required|max:255',
+            ]);
+
+            Employee::find($id)->update( $employeeValidated);
+            return Response::json('Employee '  . $employeeValidated['name'] . ' Details Updated');
+        } catch (ValidationException $e) {
+            return Response::json($e->errors(), 422);
+        }
     }
 
     /**
@@ -96,6 +130,17 @@ class EmployeeController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        try {
+            $employee = Employee::withTrashed()->find($id);
+            if ($employee->deleted_at) {
+                return Response::json("Employee " . $employee->name . " was Already Deleted");
+            } else {
+                $employee->delete();
+                return Response::json("Employee " . $employee->name . " is Deleted");
+            };
+            return Response::json($msg);
+        } catch(ValidationException $e) {
+            return Response::json($e->errors(), 422);
+        }
     }
 }

@@ -6,7 +6,9 @@
         <meta name="csrf-token" content="{{ csrf_token() }}">
 
         <title>{{ config('app.name', 'Laravel') }}</title>
-
+        {{-- <link rel="stylesheet" href="../assets/fomantic-ui/theme-material/dist/semantic.min.css"> --}}
+        <link id="theme-link" rel="stylesheet" href="{{ asset('fomantic-ui/theme-material/dist/semantic.min.css') }}">
+        <link href="https://cdn.datatables.net/v/se/dt-2.2.2/datatables.min.css" rel="stylesheet" integrity="sha384-cjwec3hxofmN1gxN1H1U8vofTqs5BMuq+EtXidxJd8RgMFqK8PBwxWR10wsojCFT" crossorigin="anonymous">
         @vite(['resources/css/app.css', 'resources/js/app.js'])
         <script defer src="https://cdn.jsdelivr.net/npm/fomantic-ui@2.9.3/dist/semantic.min.js"></script>
     </head>
@@ -45,9 +47,16 @@
             {{-- nav --}}
             <div class="ui  menu" style="margin-bottom: 0; border-radius:0 ;">
                 <a class="item" id="btn_sidebar"> <i class="hamburger icon"></i> </a>
+                <a href="{{ route('dashboard') }}" class="item"> Dashboard </a>
                 <a class="item"> Home </a>
-                <a class="item"> Contact </a>
                 <div class="right menu">
+                    <select id="theme-selector" class="ui selection dropdown">
+                        <option value="">Change Theme</option>
+                        <option value="0">Default</option>
+                        <option value="1">Material</option>
+                        <option value="2">Amazon</option>
+                        <option value="3">Github</option>
+                    </select>
                     <a class="item ui icon basic" id="darkmode"> <i class="moon icon"></i></i> </a>
                     <a class="item"> <i class="search icon"></i> </a>
                     <a class="item" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();"> <i class="sign out alternate icon"></i></i></a>
@@ -68,6 +77,24 @@
 
     <script type="module">
         $(function () {
+            const themes = [
+                "{{ asset('fomantic-ui/default/dist/semantic.min.css') }}",
+                "{{ asset('fomantic-ui/theme-material/dist/semantic.min.css') }}",
+                "{{ asset('fomantic-ui/amazon/dist/semantic.min.css') }}",
+                "{{ asset('fomantic-ui/dist/semantic.min.css') }}"
+            ];
+
+            let currentThemeIndex = localStorage.getItem("themeIndex") || 0;
+            $("#theme-link").attr("href", themes[currentThemeIndex]);
+
+            $("#theme-selector").on("change", function () {
+                currentThemeIndex = $(this).val();
+                $("#theme-link").attr("href", themes[currentThemeIndex]);
+                localStorage.setItem("themeIndex", currentThemeIndex);
+                location.reload();
+            });
+
+
             $('#btn_sidebar').on('click', function () {
                 if($('#icon_sidebar').length > 0){
                     showLongSidebar()
