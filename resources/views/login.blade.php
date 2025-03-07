@@ -5,6 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>Login</title>
 
+        <link id="theme-link" rel="stylesheet" href="{{ asset('fomantic-ui/theme-material/dist/semantic.min.css') }}">
         @vite(['resources/css/app.css', 'resources/js/app.js'])
         <script defer src="https://cdn.jsdelivr.net/npm/fomantic-ui@2.9.3/dist/semantic.min.js"></script>
     </head>
